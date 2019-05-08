@@ -4,6 +4,17 @@ module MakeBrowserWindow =
           type mainToRendererMessages;
           let message: string;
         }) => {
+  type webPreferences = {
+    .
+    nodeIntegration: Js.null(bool),
+    preload: Js.null(string),
+  };
+
+  [@bs.obj]
+  external makeWebPreferences:
+    (~preload: string=?, ~nodeIntegration: bool=?, unit) => webPreferences =
+    "";
+
   type windowConfig = {
     .
     width: int,
@@ -12,6 +23,7 @@ module MakeBrowserWindow =
     titleBarStyle: Js.null(string),
     fullscreenable: Js.null(bool),
     resizeable: Js.null(bool),
+    webPreferences: Js.null(webPreferences),
   };
 
   [@bs.obj]
@@ -26,6 +38,7 @@ module MakeBrowserWindow =
       ~transparent: bool=?,
       ~title: string=?,
       ~backgroundColor: string=?,
+      ~webPreferences: webPreferences=?,
       unit
     ) =>
     windowConfig =
